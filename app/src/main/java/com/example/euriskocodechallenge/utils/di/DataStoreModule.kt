@@ -1,4 +1,4 @@
-package com.example.euriskocodechallenge.data.di
+package com.example.euriskocodechallenge.utils.di
 
 import android.app.Application
 import com.example.euriskocodechallenge.data.local.datastore.UserDataStore

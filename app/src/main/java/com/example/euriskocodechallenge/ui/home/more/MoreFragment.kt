@@ -1,7 +1,6 @@
 package com.example.euriskocodechallenge.ui.home.more
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,8 @@ import androidx.navigation.findNavController
 import coil.load
 import com.example.euriskocodechallenge.R
 import com.example.euriskocodechallenge.databinding.FragmentMoreBinding
-import com.example.euriskocodechallenge.ui.LoginActivity
-import com.example.euriskocodechallenge.viewmodel.MoreViewModel
+import com.example.euriskocodechallenge.ui.login.LoginActivity
+import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

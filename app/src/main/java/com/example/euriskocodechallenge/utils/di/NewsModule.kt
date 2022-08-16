@@ -1,4 +1,4 @@
-package com.example.euriskocodechallenge.data.di
+package com.example.euriskocodechallenge.utils.di
 
 import com.example.euriskocodechallenge.data.remote.NewsService
 import com.example.euriskocodechallenge.utils.Constants

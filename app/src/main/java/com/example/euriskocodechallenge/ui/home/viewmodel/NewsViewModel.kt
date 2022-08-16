@@ -1,15 +1,11 @@
-package com.example.euriskocodechallenge.viewmodel
+package com.example.euriskocodechallenge.ui.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.euriskocodechallenge.data.repository.NewsRepository
-import com.example.euriskocodechallenge.model.News
-import com.example.euriskocodechallenge.model.Result
-import com.example.euriskocodechallenge.utils.ConnectivityLiveData
-import com.example.euriskocodechallenge.utils.Constants
+import com.example.euriskocodechallenge.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

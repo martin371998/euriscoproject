@@ -3,7 +3,6 @@ package com.example.euriskocodechallenge.ui.home.news
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.euriskocodechallenge.R
 import com.example.euriskocodechallenge.databinding.FragmentNewsBinding
 import com.example.euriskocodechallenge.utils.ConnectivityLiveData
-import com.example.euriskocodechallenge.utils.Constants
-import com.example.euriskocodechallenge.viewmodel.NewsViewModel
+import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

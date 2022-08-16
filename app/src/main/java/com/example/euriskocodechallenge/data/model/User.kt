@@ -1,4 +1,4 @@
-package com.example.euriskocodechallenge.model
+package com.example.euriskocodechallenge.data.model
 
 import android.graphics.Bitmap
 import androidx.room.Entity
