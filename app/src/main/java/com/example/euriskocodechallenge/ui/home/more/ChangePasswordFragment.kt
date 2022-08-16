@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.euriskocodechallenge.databinding.FragmentAboutUsBinding
 import com.example.euriskocodechallenge.databinding.FragmentChangePasswordBinding
 import com.example.euriskocodechallenge.utils.Constants
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
@@ -15,8 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
-    private var _binding: FragmentChangePasswordBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentChangePasswordBinding
     private val viewModel by viewModels<MoreViewModel>()
 
     override fun onCreateView(
@@ -24,7 +24,7 @@ class ChangePasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
+        binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.btnSave.setOnClickListener {

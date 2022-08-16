@@ -18,6 +18,7 @@ import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.example.euriskocodechallenge.databinding.FragmentChangePasswordBinding
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
 import com.example.euriskocodechallenge.utils.Constants
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
@@ -26,8 +27,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EditProfileFragment : Fragment() {
-    private var _binding: FragmentEditProfileBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentEditProfileBinding
     private val viewModel by viewModels<MoreViewModel>()
     private lateinit var selectedImage: Bitmap
 
@@ -36,7 +36,7 @@ class EditProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
+        binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
         initUI()
@@ -86,7 +86,7 @@ class EditProfileFragment : Fragment() {
                 binding.fNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.fNameEt.text!!.trim().toString()
+            !binding.fNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.fNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -97,7 +97,7 @@ class EditProfileFragment : Fragment() {
                 binding.lNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.lNameEt.text!!.trim().toString()
+            !binding.lNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.lNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -119,6 +119,6 @@ class EditProfileFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+
     }
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import coil.load
 import com.example.euriskocodechallenge.R
+import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
 import com.example.euriskocodechallenge.databinding.FragmentMoreBinding
 import com.example.euriskocodechallenge.ui.login.LoginActivity
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
@@ -18,8 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MoreFragment : Fragment() {
-    private var _binding: FragmentMoreBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentMoreBinding
     private val viewModel: MoreViewModel by viewModels()
 
     override fun onCreateView(
@@ -27,7 +27,7 @@ class MoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentMoreBinding.inflate(inflater, container, false)
+        binding = FragmentMoreBinding.inflate(inflater, container, false)
         val view = binding.root
 
         //Load User Info and Display Image
@@ -63,6 +63,6 @@ class MoreFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+
     }
 }

@@ -34,15 +34,20 @@ class SignUpActivity : AppCompatActivity() {
         //We can also add Check if User exist with same email address
         binding.btnSignup.setOnClickListener {
             if (validateFields() && validatePass()) {
-                val user = User(
-                    userId = 0L,
-                    email = binding.emailEt.text?.trim().toString(),
-                    fName = binding.fNameEt.text?.trim().toString(),
-                    lName = binding.lNameEt.text?.trim().toString(),
-                    password = binding.passEt.text?.trim().toString(),
-                    application.getDrawable(R.drawable.ic_account_circle)!!.toBitmap()
-                )
-                userViewModel.insertUser(user)
+                val user =
+                    application.getDrawable(R.drawable.ic_account_circle)?.toBitmap()?.let { it1 ->
+                        User(
+                            userId = 0L,
+                            email = binding.emailEt.text?.trim().toString(),
+                            fName = binding.fNameEt.text?.trim().toString(),
+                            lName = binding.lNameEt.text?.trim().toString(),
+                            password = binding.passEt.text?.trim().toString(),
+                            it1
+                        )
+                    }
+                if (user != null) {
+                    userViewModel.insertUser(user)
+                }
             }
         }
         observeViewModel()
@@ -86,7 +91,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.emailEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.emailEt.text!!.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
+            !binding.emailEt.text?.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
                 binding.emailEt.error = Constants.INVALID_EMAIL
                 isValid = false
             }
@@ -96,7 +101,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.fNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.fNameEt.text!!.trim().toString()
+            !binding.fNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.fNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -107,7 +112,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.lNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.lNameEt.text!!.trim().toString()
+            !binding.lNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.lNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -118,7 +123,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.passEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            binding.passEt.text!!.trim().length < 7 -> {
+            binding.passEt.text.toString().trim().length < 7 -> {
                 binding.passEt.error = Constants.TOO_SHORT
                 isValid = false
             }

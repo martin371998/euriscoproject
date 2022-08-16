@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.emailEditText.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.emailEditText.text!!.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
+            !binding.emailEditText.text?.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
                 binding.emailEditText.error = Constants.INVALID_EMAIL
             }
 

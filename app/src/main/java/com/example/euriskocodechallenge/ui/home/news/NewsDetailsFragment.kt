@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.euriskocodechallenge.databinding.FragmentMoreBinding
 import com.example.euriskocodechallenge.databinding.FragmentNewsDetailsBinding
 import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,8 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NewsDetailsFragment : Fragment() {
 
-    private var _binding: FragmentNewsDetailsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentNewsDetailsBinding
     private val viewModel: NewsViewModel by viewModels()
 
     val args: NewsDetailsFragmentArgs by navArgs()
@@ -28,7 +28,7 @@ class NewsDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentNewsDetailsBinding.inflate(inflater, container, false)
+        binding = FragmentNewsDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
         val position = args.newsItemPosition
 
