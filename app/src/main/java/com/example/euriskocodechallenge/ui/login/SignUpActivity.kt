@@ -45,7 +45,7 @@ class SignUpActivity : AppCompatActivity() {
                             it1
                         )
                     }
-                if (user != null) {
+                user?.let {
                     userViewModel.insertUser(user)
                 }
             }

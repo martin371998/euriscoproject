@@ -79,7 +79,7 @@ class NewsFragment : Fragment() {
     private fun observeViewModel(view: View) {
         //Observe Retrofit Result -> Set Recycler View Data, Dismiss Progress Bar
         viewModel.response.observe(viewLifecycleOwner) {
-            if (it != null) {
+            if (!it.equals(null)) {
                 recyclerViewAdapter.setData(it)
                 binding.newsProgress.visibility = View.GONE
             }

@@ -31,17 +31,9 @@ class MoreViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val userId = userDatabaseRepository.getLoggedInUserID()
             userId.collect { id ->
-                userDatabaseRepository.getUserById(id).collectLatest {
-                    if (it != null) {
-                        val user = User(
-                            it.userId,
-                            it.email,
-                            fName,
-                            lName,
-                            it.password,
-                            imageBitmap
-                        )
-                        userDatabaseRepository.updateUser(user)
+                userDatabaseRepository.getUserById(id).collectLatest { user ->
+                    user?.let {
+                        userDatabaseRepository.updateUser(it)
                         Log.d(Constants.TAG, "Updated User")
                     }
                 }
