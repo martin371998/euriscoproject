@@ -1,5 +1,6 @@
 package com.example.euriskocodechallenge.ui.home.news
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import coil.transform.RoundedCornersTransformation
 import com.example.euriskocodechallenge.databinding.NewsItemBinding
 import com.example.euriskocodechallenge.data.model.News
 import com.example.euriskocodechallenge.data.model.Result
+import com.example.euriskocodechallenge.utils.Constants
 
 class NewsRVAdapter : RecyclerView.Adapter<NewsRVAdapter.NewsViewHolder>() {
 
@@ -48,10 +50,13 @@ class NewsRVAdapter : RecyclerView.Adapter<NewsRVAdapter.NewsViewHolder>() {
         holder.binding.apply {
             titleTv.text = newsList[position].title
             authorTv.text = newsList[position].byline
-            newsThumb.load(newsList[position].media[0].mediaMetadata[0].url) {
-                crossfade(true)
-                crossfade(1000)
-                transformations(RoundedCornersTransformation(10F))
+            if(newsList[position].media[0].mediaMetadata[0].url.isNullOrEmpty()){
+                newsThumb.load(newsList[position].media[0].mediaMetadata[0].url) {
+                    crossfade(true)
+                    crossfade(1000)
+                    transformations(RoundedCornersTransformation(10F))
+            }
+
             }
         }
     }
