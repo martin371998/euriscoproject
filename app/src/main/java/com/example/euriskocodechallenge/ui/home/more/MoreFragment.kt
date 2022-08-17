@@ -32,7 +32,15 @@ class MoreFragment : Fragment() {
         val view = binding.root
 
         //Load User Info and Display Image
-        initUI()
+        setupViews()
+
+        implementListeners()
+
+        return view
+    }
+
+    private fun implementListeners() {
+
 
         binding.btnEditProfile.setOnClickListener {
             it.findNavController().navigate(R.id.action_moreFragment_to_editProfileFragment)
@@ -48,15 +56,14 @@ class MoreFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener {
             viewModel.logOutUser()
+
             utilityfunctions.showtoast(requireContext(), "Logged Out")
             startActivity(Intent(requireContext(), LoginActivity::class.java))
         }
 
-        return view
     }
 
-
-    private fun initUI() {
+    private fun setupViews() {
         viewModel.loggedInUser.observe(viewLifecycleOwner) {
             binding.userImage.load(it.imageSrc)
         }

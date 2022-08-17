@@ -28,12 +28,16 @@ class ChangePasswordFragment : Fragment() {
         binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        implementListeners()
+
+        return view
+    }
+    private fun implementListeners() {
         binding.btnSave.setOnClickListener {
             if(validateFields()){
                 validateOldPass()
             }
         }
-        return view
     }
 
     //Checks Empty Fields

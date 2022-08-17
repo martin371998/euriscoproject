@@ -31,13 +31,15 @@ class LoginActivity : AppCompatActivity() {
         userViewModel.isLoggedIn()
         setContentView(binding.root)
         supportActionBar?.hide()
+        implementListeners()
+        initObservers()
+    }
 
-
+    private fun implementListeners() {
         //Redirect to SignUp Activity
         binding.hyperSignUp.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
-
         /*
         Check credentials if they match the user's info in the DB
         Then return user value as LiveData which is observed using fetchUser()
@@ -49,12 +51,10 @@ class LoginActivity : AppCompatActivity() {
                 userViewModel.loginUser(uEmail, uPass)
             }
         }
-
-        observeViewModel()
     }
 
     //This function handles all the LiveData to be observed
-    private fun observeViewModel() {
+    private fun initObservers() {
         //Display Toast Message if an error occurs
         userViewModel.fetchError().observe(this) {
             utilityfunctions.showtoast(this, it)
@@ -76,7 +76,8 @@ class LoginActivity : AppCompatActivity() {
                 binding.emailEditText.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.emailEditText.text?.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
+            !binding.emailEditText.text?.trim().toString()
+                .matches(Constants.EMAIL_REGEX.toRegex()) -> {
                 binding.emailEditText.error = Constants.INVALID_EMAIL
             }
 

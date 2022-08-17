@@ -20,13 +20,15 @@ class AboutUsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAboutUsBinding.inflate(inflater, container, false)
         val view = binding.root
+        setupViews()
 
-        //TODO Add Connection Test
-
+        return view
+    }
+    //TODO Add Connection Test
+    private fun setupViews() {
         binding.webView.webViewClient = WebViewClient()
         binding.webView.loadUrl("http://www.euriskomobility.com")
 
-        return view
     }
 
 }

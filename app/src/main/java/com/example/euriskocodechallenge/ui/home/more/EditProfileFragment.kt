@@ -70,6 +70,9 @@ class EditProfileFragment : Fragment() {
 
         return view
     }
+    private fun implementListeners() {
+
+    }
 
     private suspend fun getBitmap(uri: Uri): Bitmap {
         val loader = ImageLoader(requireContext())
