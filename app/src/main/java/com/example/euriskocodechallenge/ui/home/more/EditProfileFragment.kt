@@ -18,6 +18,7 @@ import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.example.euriskocodechallenge.common.utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentChangePasswordBinding
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
 import com.example.euriskocodechallenge.utils.Constants
@@ -62,7 +63,7 @@ class EditProfileFragment : Fragment() {
                     binding.lNameEt.text.toString(),
                     selectedImage
                 )
-                Toast.makeText(requireContext(), Constants.USER_UPDATED, Toast.LENGTH_SHORT).show()
+                utilityfunctions.showtoast(requireContext(),Constants.USER_UPDATED)
                 findNavController().navigateUp()
             }
         }

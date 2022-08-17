@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.euriskocodechallenge.common.utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentAboutUsBinding
 import com.example.euriskocodechallenge.databinding.FragmentChangePasswordBinding
 import com.example.euriskocodechallenge.utils.Constants
@@ -57,7 +58,7 @@ class ChangePasswordFragment : Fragment() {
         viewModel.loggedInUser.observe(viewLifecycleOwner) {
             if (binding.oldPassEt.text.toString() == it.password) {
                 viewModel.updateUserPassword(it,binding.newPassEt.text.toString())
-                Toast.makeText(requireContext(),Constants.USER_UPDATED,Toast.LENGTH_SHORT).show()
+                utilityfunctions.showtoast(requireContext(),Constants.USER_UPDATED)
                 findNavController().navigateUp()
             } else binding.oldPassEt.error = Constants.WRONG_PASSWORD
         }

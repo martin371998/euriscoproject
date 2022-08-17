@@ -13,10 +13,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.euriskocodechallenge.R
+import com.example.euriskocodechallenge.common.utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentNewsBinding
 import com.example.euriskocodechallenge.databinding.FragmentNewsDetailsBinding
 import com.example.euriskocodechallenge.utils.ConnectivityLiveData
 import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
+import com.example.euriskocodechallenge.utils.Constants
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,15 +46,14 @@ class NewsFragment : Fragment() {
     }
 
     private fun checkConnection(view: View) {
-        connectionStatus = ConnectivityLiveData(requireActivity().application)
-        connectionStatus.observe(viewLifecycleOwner) {
+        ConnectivityLiveData(requireActivity().application).observe(viewLifecycleOwner) {
             if (it) {
                 binding.internetTv.visibility = View.GONE
                 binding.newsProgress.visibility = View.VISIBLE
                 initRecyclerView()
                 observeViewModel(view)
             } else if (!it) {
-                Toast.makeText(requireContext(), "Lost Connection", Toast.LENGTH_SHORT).show()
+                utilityfunctions.showtoast(requireContext(), "Lost Connection")
                 binding.newsRecycler.visibility = View.GONE
                 binding.internetTv.visibility = View.VISIBLE
             }
@@ -69,7 +70,7 @@ class NewsFragment : Fragment() {
                     override fun onItemClick(position: Int) {
                         val action = NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment(position)
                         Navigation.findNavController(binding.root).navigate(action)
-                        Toast.makeText(requireContext(),"$position",Toast.LENGTH_SHORT).show()
+                        utilityfunctions.showtoast(requireContext(), "$position")
                     }
                 })
             }
