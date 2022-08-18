@@ -35,10 +35,8 @@ class HomeActivity : AppCompatActivity() {
                 else -> binding.bottomNav.visibility = GONE
             }
         }
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNav.setupWithNavController(navController)
-
     }
 
 
