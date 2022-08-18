@@ -6,7 +6,8 @@ object Constants {
 
     //Retrofit2 Constants
     const val BASE_URL = "https://api.nytimes.com"
-    const val URL_QUERY = "/svc/mostpopular/v2/emailed/7.json?api-key=Ocqu5ePwz2Ms1SnjumZshVQkYUuMKHUA"
+    const val URL_QUERY =
+        "/svc/mostpopular/v2/emailed/7.json?api-key=Ocqu5ePwz2Ms1SnjumZshVQkYUuMKHUA"
 
     //DataStore Constants
     const val USER_DATASTORE_NAME = "User DataStore"

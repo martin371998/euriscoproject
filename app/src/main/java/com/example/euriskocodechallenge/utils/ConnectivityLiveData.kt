@@ -9,15 +9,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 
-class ConnectivityLiveData(private val connectivityManager: ConnectivityManager)
-    : LiveData<Boolean>(){
-        constructor(application: Application) : this(
-            application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        )
+class ConnectivityLiveData(private val connectivityManager: ConnectivityManager) :
+    LiveData<Boolean>() {
+    constructor(application: Application) : this(
+        application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    )
 
     private val networkCallback = @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 
-    object : ConnectivityManager.NetworkCallback(){
+    object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
             postValue(true)

@@ -13,7 +13,7 @@ import javax.inject.Singleton
 object DataStoreModule {
     @Provides
     @Singleton
-    fun provideUserDataStore(application: Application) : UserDataStore{
+    fun provideUserDataStore(application: Application): UserDataStore {
         return UserDataStore(application)
     }
 }

@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NewsDetailsFragment : Fragment() {
 
-    private lateinit var binding : FragmentNewsDetailsBinding
+    private lateinit var binding: FragmentNewsDetailsBinding
     private val viewModel: NewsViewModel by viewModels()
 
     val args: NewsDetailsFragmentArgs by navArgs()

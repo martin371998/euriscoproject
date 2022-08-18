@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,8 +17,7 @@ import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.example.euriskocodechallenge.common.utilityfunctions
-import com.example.euriskocodechallenge.databinding.FragmentChangePasswordBinding
+import com.example.euriskocodechallenge.common.UtilityFunctions
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
 import com.example.euriskocodechallenge.utils.Constants
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
@@ -28,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EditProfileFragment : Fragment() {
-    private lateinit var binding : FragmentEditProfileBinding
+    private lateinit var binding: FragmentEditProfileBinding
     private val viewModel by viewModels<MoreViewModel>()
     private lateinit var selectedImage: Bitmap
 
@@ -63,13 +61,14 @@ class EditProfileFragment : Fragment() {
                     binding.lNameEt.text.toString(),
                     selectedImage
                 )
-                utilityfunctions.showtoast(requireContext(),Constants.USER_UPDATED)
+                UtilityFunctions.showtoast(requireContext(), Constants.USER_UPDATED)
                 findNavController().navigateUp()
             }
         }
 
         return view
     }
+
     private fun implementListeners() {
 
     }

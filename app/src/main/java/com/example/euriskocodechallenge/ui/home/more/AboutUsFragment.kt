@@ -11,7 +11,7 @@ import com.example.euriskocodechallenge.databinding.FragmentAboutUsBinding
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
 
 class AboutUsFragment : Fragment() {
-    private lateinit var binding : FragmentAboutUsBinding
+    private lateinit var binding: FragmentAboutUsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +24,7 @@ class AboutUsFragment : Fragment() {
 
         return view
     }
+
     //TODO Add Connection Test
     private fun setupViews() {
         binding.webView.webViewClient = WebViewClient()

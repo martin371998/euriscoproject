@@ -17,7 +17,7 @@ interface UserDao {
     fun loginUser(email: String, pass: String): Flow<User?>
 
     @Query("SELECT * FROM user WHERE userId = :id")
-    fun getUserById(id : Long) : Flow<User?>
+    fun getUserById(id: Long): Flow<User?>
 
     @Update
     fun updateUser(user: User)

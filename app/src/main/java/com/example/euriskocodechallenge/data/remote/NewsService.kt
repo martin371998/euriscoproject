@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface NewsService {
     @GET(Constants.URL_QUERY)
-    suspend fun getAllNews() : Response<Result>
+    suspend fun getAllNews(): Response<Result>
 
 
 }

@@ -54,7 +54,7 @@ class MoreViewModel @Inject constructor(
         }
     }
 
-    fun logOutUser(){
+    fun logOutUser() {
         viewModelScope.launch {
             userDatabaseRepository.setUserLoggedOut()
         }
@@ -74,9 +74,6 @@ class MoreViewModel @Inject constructor(
             )
         }
     }
-
-
-
 
 
 }

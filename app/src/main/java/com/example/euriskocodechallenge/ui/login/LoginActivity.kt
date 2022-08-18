@@ -2,10 +2,9 @@ package com.example.euriskocodechallenge.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.euriskocodechallenge.common.utilityfunctions
+import com.example.euriskocodechallenge.common.UtilityFunctions
 import com.example.euriskocodechallenge.databinding.ActivityLoginBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
 import com.example.euriskocodechallenge.utils.Constants
@@ -57,12 +56,12 @@ class LoginActivity : AppCompatActivity() {
     private fun initObservers() {
         //Display Toast Message if an error occurs
         userViewModel.fetchError().observe(this) {
-            utilityfunctions.showtoast(this, it)
+            UtilityFunctions.showtoast(this, it)
         }
         //Get Fetched User after successful login
         //Redirect the user to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
+            UtilityFunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }
