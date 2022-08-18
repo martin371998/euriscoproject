@@ -3,8 +3,10 @@ package com.example.euriskocodechallenge.common
 import android.app.Activity
 import android.content.Context
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.euriskocodechallenge.BuildConfig
 import com.example.euriskocodechallenge.utils.ConnectivityLiveData
 import java.security.AccessControlContext
 import javax.crypto.Cipher
@@ -71,6 +73,10 @@ class UtilityFunctions {
                 println("Error while decrypting: $e");
             }
             return ""
+        }
+        fun printLogs(tag:String, message: String){
+            if(BuildConfig.DEBUG)
+                Log.e(tag,message)
         }
     }
 

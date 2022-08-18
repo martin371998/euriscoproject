@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.example.euriskocodechallenge.common.UtilityFunctions
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.data.repository.UserDatabaseRepository
 import com.example.euriskocodechallenge.utils.Constants
@@ -46,7 +47,7 @@ class MoreViewModel @Inject constructor(
                 userDatabaseRepository.getUserById(id).collectLatest { user ->
                     user?.let {
                         userDatabaseRepository.updateUser(it)
-                        Log.d(Constants.TAG, "Updated User")
+                        UtilityFunctions.printLogs(Constants.TAG, "Updated User")
                     }
                 }
             }

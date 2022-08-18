@@ -45,7 +45,7 @@ class EditProfileFragment : Fragment() {
             lifecycleScope.launch {
                 selectedImage = viewModel.getBitmap(it)
                 binding.userImage.load(selectedImage)
-                Log.d(Constants.TAG, "${viewModel.getBitmap(it)}") //BITMAP
+                UtilityFunctions.printLogs(Constants.TAG, "${viewModel.getBitmap(it)}")
             }
         }
 
