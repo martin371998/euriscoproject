@@ -1,11 +1,14 @@
 package com.example.euriskocodechallenge.ui.home.more
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +27,6 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.euriskocodechallenge.R
 import com.example.euriskocodechallenge.common.UtilityFunctions
-import com.example.euriskocodechallenge.common.safe
 import com.example.euriskocodechallenge.common.toBase64
 import com.example.euriskocodechallenge.common.toBitmap
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
@@ -39,14 +41,6 @@ class EditProfileFragment : Fragment() {
     private val viewModel by viewModels<MoreViewModel>()
     private lateinit var selectedImage: Bitmap
 
-    private val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        selectedImage = it.toBitmap(requireContext())
-        binding.userImage.setImageBitmap(it.toBitmap(requireContext()))
-        UtilityFunctions.printLogs("nanoNew",selectedImage.toBase64())
-//            UtilityFunctions.printLogs(Constants.TAG, "getimage: ${selectedImage.toString()}")
-//            UtilityFunctions.printLogs(Constants.TAG, "${viewModel.getBitmap(it)}")
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,10 +60,36 @@ class EditProfileFragment : Fragment() {
                 Log.d(Constants.TAG, "${getBitmap(it)}") //BITMAP
             }
         }
+        //Handles Image Selected From Camera
+        val getImageFromCamera =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val photo = result.data?.extras?.get("data") as? Bitmap
+                    photo?.let {
+                        lifecycleScope.launch {
+                            selectedImage = it
+                            binding.userImage.load(selectedImage)
+                            Log.d(Constants.TAG, "$it") //BITMAP
+                        }
+                    }
+                }
+            }
 
         //Launches Gallery Image Picker
         binding.editFab.setOnClickListener {
-            getImage.launch("image/*")
+
+            BottomSheetFragment().apply {
+                setOnCameraClickListener {
+                    if (setupPermissions()) {
+                        getImageFromCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+                    } else {
+                        makeRequest()
+                    }
+                    setOnStorageClickListener {
+                        getImage.launch("image/*")
+                    }
+                }
+            }.show(parentFragmentManager, "TAG")
         }
 
         binding.btnSave.setOnClickListener {
@@ -95,6 +115,31 @@ class EditProfileFragment : Fragment() {
         val result = (loader.execute(request) as SuccessResult).drawable
         return (result as BitmapDrawable).bitmap
     }
+
+    private fun setupPermissions(): Boolean {
+        val permission = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.CAMERA
+        )
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            UtilityFunctions.printLogs(
+                getString(R.string.error_tag),
+                getString(R.string.permission_error)
+            )
+            return false
+        }
+        return true
+    }
+
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.CAMERA),
+            Constants.CAMERA_REQUEST_CODE
+        )
+    }
+
 
     private fun validateFields(): Boolean {
         var isValid = true
