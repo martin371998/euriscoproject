@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
         //Get Fetched User after successful login
         //Redirect the user to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            UtilityFunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
+            UtilityFunctions.showtoast(this, "Welcome ${it.firstName} ${it.lastName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }

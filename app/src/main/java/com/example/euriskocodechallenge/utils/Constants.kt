@@ -2,6 +2,7 @@ package com.example.euriskocodechallenge.utils
 
 object Constants {
 
+    val VERSIONCODE = 28
     const val CAMERA_REQUEST_CODE = 50
     const val TAG = "UserLogin"
 

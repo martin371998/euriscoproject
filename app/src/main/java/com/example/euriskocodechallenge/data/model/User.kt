@@ -8,8 +8,8 @@ data class User(
     @PrimaryKey(autoGenerate = true)
     var userId: Long = 0L,
     var email: String,
-    var fName: String,
-    var lName: String,
+    var firstName: String,
+    var lastName: String,
     var password: String,
     var imageSrc: String?
 )

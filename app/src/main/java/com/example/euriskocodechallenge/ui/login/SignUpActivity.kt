@@ -47,8 +47,8 @@ class SignUpActivity : AppCompatActivity() {
                             User(
                                 userId = 0L,
                                 email = binding.emailEt.text?.trim().toString(),
-                                fName = binding.fNameEt.text?.trim().toString(),
-                                lName = binding.lNameEt.text?.trim().toString(),
+                                firstName = binding.fNameEt.text?.trim().toString(),
+                                lastName = binding.lNameEt.text?.trim().toString(),
                                 password = binding.passEt.text?.trim().toString(),
                                 it1.toBase64()
                             )
@@ -66,7 +66,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun initObservers() {
         //On Successful Login, Redirect to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            UtilityFunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
+            UtilityFunctions.showtoast(this, "Welcome ${it.firstName} ${it.lastName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
         //- Can Be Removed - Checks if user inserted successfully

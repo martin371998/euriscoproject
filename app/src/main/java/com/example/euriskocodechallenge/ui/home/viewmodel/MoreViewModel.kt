@@ -4,13 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.euriskocodechallenge.common.UtilityFunctions
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.data.repository.UserDatabaseRepository
-import com.example.euriskocodechallenge.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,26 +32,17 @@ class MoreViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val userId = userDatabaseRepository.getLoggedInUserID()
             userDatabaseRepository.getLoggedInUserID().collect {
-                var a: User? = null
+                var updatedUser: User? = null
                 var currentUser = userDatabaseRepository.getUserById(it)
-                currentUser.collect{ user ->
-                    a = user
+                currentUser.collect { user ->
+                    updatedUser = user
                 }
-                a?.fName = fName
-                a?.lName = lName
-                a?.imageSrc = imageString
+                updatedUser?.firstName = fName
+                updatedUser?.lastName = lName
+                updatedUser?.imageSrc = imageString
 
-                a?.let { updatedUser -> userDatabaseRepository.updateUser(updatedUser) }
+                updatedUser?.let { updatedUser -> userDatabaseRepository.updateUser(updatedUser) }
             }
-
-//            userId.collect { id ->
-//                userDatabaseRepository.getUserById(id).collectLatest { user ->
-//                    user?.let {
-//                        userDatabaseRepository.updateUser(it)
-//                        UtilityFunctions.printLogs(Constants.TAG, "Updated User")
-//                    }
-//                }
-//            }
         }
     }
 
@@ -84,8 +72,8 @@ class MoreViewModel @Inject constructor(
                 User(
                     user.userId,
                     user.email,
-                    user.fName,
-                    user.lName,
+                    user.firstName,
+                    user.lastName,
                     newPassword,
                     user.imageSrc
                 )

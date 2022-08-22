@@ -9,14 +9,13 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import com.example.euriskocodechallenge.R
+import com.example.euriskocodechallenge.utils.Constants
 import java.io.ByteArrayOutputStream
 
 
 fun Uri.toBitmap(context: Context): Bitmap {
-
     try {
-
-        return if (Build.VERSION.SDK_INT < 28) {
+        return if (Build.VERSION.SDK_INT < Constants.VERSIONCODE) {
             MediaStore.Images.Media.getBitmap(
                 context.contentResolver,
                 this
@@ -25,40 +24,17 @@ fun Uri.toBitmap(context: Context): Bitmap {
             val source = ImageDecoder.createSource(context.contentResolver, this)
             source.let { ImageDecoder.decodeBitmap(it) }
         }
-
-
     } catch (e: Exception) {
-
-        e.printStackTrace()
-
+        UtilityFunctions.printLogs(Constants.TAG, e.message.safe())
     }
-
     return BitmapFactory.decodeResource(
-
         context.resources,
-
         R.drawable.ic_baseline_camera_alt_24
     )
-
 }
-
 fun Bitmap.toBase64(): String {
-
     val baos = ByteArrayOutputStream()
-
     this.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
     val imageBytes = baos.toByteArray()
-
     return android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT)
-
-}
-
-
-fun String.toBitmap(): Bitmap {
-
-    val imageBytes: ByteArray = Base64.decode(this, Base64.DEFAULT)
-
-    return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-
 }

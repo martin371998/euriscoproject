@@ -9,11 +9,9 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -57,7 +55,7 @@ class EditProfileFragment : Fragment() {
             lifecycleScope.launch {
                 selectedImage = getBitmap(it)
                 binding.userImage.load(selectedImage)
-                Log.d(Constants.TAG, "${getBitmap(it)}") //BITMAP
+                UtilityFunctions.printLogs(Constants.TAG, "${getBitmap(it)}")
             }
         }
         //Handles Image Selected From Camera
@@ -69,7 +67,7 @@ class EditProfileFragment : Fragment() {
                         lifecycleScope.launch {
                             selectedImage = it
                             binding.userImage.load(selectedImage)
-                            Log.d(Constants.TAG, "$it") //BITMAP
+                            UtilityFunctions.printLogs(Constants.TAG, "$it")
                         }
                     }
                 }
@@ -99,7 +97,7 @@ class EditProfileFragment : Fragment() {
                     binding.lNameEt.text.toString(),
                     selectedImage.toBase64()
                 )
-                Toast.makeText(requireContext(), Constants.USER_UPDATED, Toast.LENGTH_SHORT).show()
+                UtilityFunctions.showtoast(requireContext(), Constants.USER_UPDATED)
                 findNavController().navigateUp()
             }
         }
@@ -148,7 +146,7 @@ class EditProfileFragment : Fragment() {
                 binding.fNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.fNameEt.text!!.trim().toString()
+            !binding.fNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.fNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -159,7 +157,7 @@ class EditProfileFragment : Fragment() {
                 binding.lNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.lNameEt.text!!.trim().toString()
+            !binding.lNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.lNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -173,12 +171,12 @@ class EditProfileFragment : Fragment() {
         viewModel.loggedInUser.observe(viewLifecycleOwner) {
             binding.userImage.load(it.imageSrc)
             it.imageSrc.let {
-                if (it != null) {
+                it?.let {
                     selectedImage = it.toBitmap()
                 }
             }
-            binding.fNameEt.setText(it.fName)
-            binding.lNameEt.setText(it.lName)
+            binding.fNameEt.setText(it.firstName)
+            binding.lNameEt.setText(it.lastName)
             binding.emailTv.text = it.email
         }
     }
