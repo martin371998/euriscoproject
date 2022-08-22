@@ -31,8 +31,8 @@ class UserViewModel @Inject constructor(
             if (isUserLoggedIn) {
                 val loggedInUserId = userDatabaseRepository.getLoggedInUserID().first().toLong()
                 val user = userDatabaseRepository.getUserById(loggedInUserId)
-                user.collect { user ->
-                    user?.let {
+                user.collect {
+                    it?.let {
                         Log.d(Constants.TAG, "User is : $it")
                         loginUser(it.email.toString(), it.password.toString())
                     }
