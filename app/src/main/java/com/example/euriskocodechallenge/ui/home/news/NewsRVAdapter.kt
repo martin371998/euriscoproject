@@ -50,13 +50,11 @@ class NewsRVAdapter : RecyclerView.Adapter<NewsRVAdapter.NewsViewHolder>() {
         holder.binding.apply {
             titleTv.text = newsList[position].title
             authorTv.text = newsList[position].byline
-            if(newsList[position].media[0].mediaMetadata[0].url.isNullOrEmpty()){
-                newsThumb.load(newsList[position].media[0].mediaMetadata[0].url) {
-                    crossfade(true)
-                    crossfade(1000)
-                    transformations(RoundedCornersTransformation(10F))
-            }
-
+            if(newsList[position].media[0].mediaMetadata[0].url.isNullOrEmpty())
+            newsThumb.load(newsList[position].media[0].mediaMetadata[0].url) {
+                crossfade(true)
+                crossfade(1000)
+                transformations(RoundedCornersTransformation(10F))
             }
         }
     }

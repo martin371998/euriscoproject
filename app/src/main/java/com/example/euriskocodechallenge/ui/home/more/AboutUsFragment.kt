@@ -11,15 +11,14 @@ import com.example.euriskocodechallenge.databinding.FragmentAboutUsBinding
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
 
 class AboutUsFragment : Fragment() {
-    private var _binding: FragmentAboutUsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentAboutUsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentAboutUsBinding.inflate(inflater, container, false)
+        binding = FragmentAboutUsBinding.inflate(inflater, container, false)
         val view = binding.root
 
         //TODO Add Connection Test

@@ -32,7 +32,7 @@ class MoreViewModel @Inject constructor(
             val userId = userDatabaseRepository.getLoggedInUserID()
             userId.collect { id ->
                 userDatabaseRepository.getUserById(id).collectLatest {
-                    if (it != null) {
+                    it?.let{
                         val user = User(
                             it.userId,
                             it.email,

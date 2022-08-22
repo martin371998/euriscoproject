@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.euriskocodechallenge.R
 import com.example.euriskocodechallenge.databinding.FragmentNewsBinding
+import com.example.euriskocodechallenge.databinding.FragmentNewsDetailsBinding
 import com.example.euriskocodechallenge.utils.ConnectivityLiveData
 import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -22,8 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewsFragment : Fragment() {
-    private var _binding: FragmentNewsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentNewsBinding
     private val viewModel: NewsViewModel by viewModels()
     private val recyclerViewAdapter by lazy { NewsRVAdapter() }
     private lateinit var connectionStatus: ConnectivityLiveData
@@ -34,7 +34,7 @@ class NewsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentNewsBinding.inflate(inflater, container, false)
+        binding = FragmentNewsBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.internetTv.visibility = View.VISIBLE
@@ -79,7 +79,7 @@ class NewsFragment : Fragment() {
     private fun observeViewModel(view: View) {
         //Observe Retrofit Result -> Set Recycler View Data, Dismiss Progress Bar
         viewModel.response.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 recyclerViewAdapter.setData(it)
                 binding.newsProgress.visibility = View.GONE
             }
