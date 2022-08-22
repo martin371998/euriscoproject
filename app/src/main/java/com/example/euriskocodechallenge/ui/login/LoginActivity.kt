@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         initObservers()
     }
 
+
     private fun implementListeners() {
         //Redirect to SignUp Activity
         binding.hyperSignUp.setOnClickListener {
