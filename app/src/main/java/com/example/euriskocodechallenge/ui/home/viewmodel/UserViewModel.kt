@@ -1,6 +1,5 @@
 package com.example.euriskocodechallenge.ui.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.euriskocodechallenge.common.UtilityFunctions
 import com.example.euriskocodechallenge.data.model.User
@@ -62,8 +61,8 @@ class UserViewModel @Inject constructor(
     //On User-SignUp insert a new user
     fun insertUser(user: User) {
         viewModelScope.launch {
-            if (user.fName.isNullOrEmpty() ||
-                user.lName.isNullOrEmpty() ||
+            if (user.firstName.isNullOrEmpty() ||
+                user.lastName.isNullOrEmpty() ||
                 user.email.isNullOrEmpty() ||
                 user.password.isNullOrEmpty()
             ) {
