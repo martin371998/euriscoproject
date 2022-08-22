@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_first_name"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="@dimen/textfield_margin_size"
                 app:boxStrokeWidthFocused="@dimen/textfield_stroke_size"
                 app:endIconMode="clear_text"
                 app:endIconTint="?attr/colorPrimary">
