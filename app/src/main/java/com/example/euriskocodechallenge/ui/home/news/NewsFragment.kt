@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,17 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.euriskocodechallenge.R
 import com.example.euriskocodechallenge.common.utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentNewsBinding
-import com.example.euriskocodechallenge.databinding.FragmentNewsDetailsBinding
-import com.example.euriskocodechallenge.utils.ConnectivityLiveData
 import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
-import com.example.euriskocodechallenge.utils.Constants
+import com.example.euriskocodechallenge.utils.ConnectivityLiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class NewsFragment : Fragment() {
-    private lateinit var binding : FragmentNewsBinding
+    private lateinit var binding: FragmentNewsBinding
     private val viewModel: NewsViewModel by viewModels()
     private val recyclerViewAdapter by lazy { NewsRVAdapter() }
     private lateinit var connectionStatus: ConnectivityLiveData
@@ -52,7 +49,7 @@ class NewsFragment : Fragment() {
                 binding.newsProgress.visibility = View.VISIBLE
                 initRecyclerView()
                 observeViewModel(view)
-            } else if (!it) {
+            } else {
                 utilityfunctions.showtoast(requireContext(), "Lost Connection")
                 binding.newsRecycler.visibility = View.GONE
                 binding.internetTv.visibility = View.VISIBLE
@@ -66,9 +63,10 @@ class NewsFragment : Fragment() {
         binding.newsRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = recyclerViewAdapter.apply {
-                setOnItemClickListener(object : NewsRVAdapter.onItemClickedListener{
+                setOnItemClickListener(object : NewsRVAdapter.onItemClickedListener {
                     override fun onItemClick(position: Int) {
-                        val action = NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment(position)
+                        val action =
+                            NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment(position)
                         Navigation.findNavController(binding.root).navigate(action)
                         utilityfunctions.showtoast(requireContext(), "$position")
                     }
