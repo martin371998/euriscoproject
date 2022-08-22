@@ -1,13 +1,11 @@
 package com.example.euriskocodechallenge.ui.home.viewmodel
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.data.repository.UserDatabaseRepository
-import com.example.euriskocodechallenge.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -31,18 +29,9 @@ class MoreViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val userId = userDatabaseRepository.getLoggedInUserID()
             userId.collect { id ->
-                userDatabaseRepository.getUserById(id).collectLatest {
-                    it?.let{
-                        val user = User(
-                            it.userId,
-                            it.email,
-                            fName,
-                            lName,
-                            it.password,
-                            imageBitmap
-                        )
-                        userDatabaseRepository.updateUser(user)
-                        Log.d(Constants.TAG, "Updated User")
+                userDatabaseRepository.getUserById(id).collectLatest { user ->
+                    user?.let {
+                        userDatabaseRepository.updateUser(it)
                     }
                 }
             }
@@ -62,7 +51,7 @@ class MoreViewModel @Inject constructor(
         }
     }
 
-    fun logOutUser(){
+    fun logOutUser() {
         viewModelScope.launch {
             userDatabaseRepository.setUserLoggedOut()
         }
