@@ -49,7 +49,7 @@ class NewsRVAdapter : RecyclerView.Adapter<NewsRVAdapter.NewsViewHolder>() {
             titleTv.text = newsList[position].title
             authorTv.text = newsList[position].byline
             newsList[position].media.firstOrNull()?.mediaMetadata?.firstOrNull()?.let {
-                newsThumb.load(newsList[position].media[0].mediaMetadata[0].url) {
+                newsThumb.load(it.url) {
                     crossfade(true)
                     crossfade(1000)
                     transformations(RoundedCornersTransformation(10F))
