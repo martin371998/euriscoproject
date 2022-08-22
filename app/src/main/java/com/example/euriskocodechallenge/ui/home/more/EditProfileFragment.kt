@@ -43,9 +43,9 @@ class EditProfileFragment : Fragment() {
         //Handles Image Selected From Gallery
         val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
             lifecycleScope.launch {
-                selectedImage = getBitmap(it)
+                selectedImage = viewModel.getBitmap(it)
                 binding.userImage.load(selectedImage)
-                Log.d(Constants.TAG, "${getBitmap(it)}") //BITMAP
+                Log.d(Constants.TAG, "${viewModel.getBitmap(it)}") //BITMAP
             }
         }
 
@@ -73,14 +73,6 @@ class EditProfileFragment : Fragment() {
 
     }
 
-    private suspend fun getBitmap(uri: Uri): Bitmap {
-        val loader = ImageLoader(requireContext())
-        val request = ImageRequest.Builder(requireContext())
-            .data(uri)
-            .build()
-        val result = (loader.execute(request) as SuccessResult).drawable
-        return (result as BitmapDrawable).bitmap
-    }
 
     private fun validateFields(): Boolean {
         var isValid = true
