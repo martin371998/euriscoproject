@@ -35,7 +35,7 @@ class NewsDetailsFragment : Fragment() {
 
         //TODO Add Connection Test
         viewModel.response.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let{
                 binding.titleTv.text = it.news[position].title
                 binding.articleImage.load(it.news[position].media[0].mediaMetadata[2].url)
                 binding.abstractTv.text = it.news[position].abstract
