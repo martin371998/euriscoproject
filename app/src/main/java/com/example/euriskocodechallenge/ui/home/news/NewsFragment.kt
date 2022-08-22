@@ -34,12 +34,15 @@ class NewsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentNewsBinding.inflate(inflater, container, false)
-        val view = binding.root
+        setupViews()
 
+
+
+        return binding.root
+    }
+    private fun setupViews() {
         binding.internetTv.visibility = View.VISIBLE
-        checkConnection(view)
-
-        return view
+        checkConnection(binding.root)
     }
 
     private fun checkConnection(view: View) {

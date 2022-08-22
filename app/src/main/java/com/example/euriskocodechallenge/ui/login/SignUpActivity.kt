@@ -31,8 +31,12 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        //Check if fields are valid, then insert new user
-        //We can also add Check if User exist with same email address
+
+        implementListeners()
+        initObservers()
+    }
+
+    private fun implementListeners() {
         binding.btnSignup.setOnClickListener {
             if (validateFields() && validatePass()) {
                 val user =
@@ -51,11 +55,12 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         }
-        observeViewModel()
     }
 
-    //This function handles all the LiveData to be observed
-    private fun observeViewModel() {
+
+    //Check if fields are valid, then insert new user
+    //We can also add Check if User exist with same email address
+    private fun initObservers() {
         //On Successful Login, Redirect to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
             utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
