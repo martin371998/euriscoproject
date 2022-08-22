@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.euriskocodechallenge.common.utilityfunctions
 import com.example.euriskocodechallenge.databinding.ActivityLoginBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
 import com.example.euriskocodechallenge.utils.Constants
@@ -30,13 +31,16 @@ class LoginActivity : AppCompatActivity() {
         userViewModel.isLoggedIn()
         setContentView(binding.root)
         supportActionBar?.hide()
+        implementListeners()
+        initObservers()
+    }
 
 
+    private fun implementListeners() {
         //Redirect to SignUp Activity
         binding.hyperSignUp.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
-
         /*
         Check credentials if they match the user's info in the DB
         Then return user value as LiveData which is observed using fetchUser()
@@ -48,20 +52,18 @@ class LoginActivity : AppCompatActivity() {
                 userViewModel.loginUser(uEmail, uPass)
             }
         }
-
-        observeViewModel()
     }
 
     //This function handles all the LiveData to be observed
-    private fun observeViewModel() {
+    private fun initObservers() {
         //Display Toast Message if an error occurs
         userViewModel.fetchError().observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            utilityfunctions.showtoast(this, it)
         }
         //Get Fetched User after successful login
         //Redirect the user to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            Toast.makeText(this, "Welcome ${it.fName} ${it.lName}", Toast.LENGTH_SHORT).show()
+            utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }
@@ -75,7 +77,8 @@ class LoginActivity : AppCompatActivity() {
                 binding.emailEditText.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.emailEditText.text?.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
+            !binding.emailEditText.text?.trim().toString()
+                .matches(Constants.EMAIL_REGEX.toRegex()) -> {
                 binding.emailEditText.error = Constants.INVALID_EMAIL
             }
 

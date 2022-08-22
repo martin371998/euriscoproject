@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.graphics.drawable.toBitmap
 import com.example.euriskocodechallenge.R
+import com.example.euriskocodechallenge.common.utilityfunctions
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.databinding.ActivitySignUpBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
@@ -30,8 +31,12 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        //Check if fields are valid, then insert new user
-        //We can also add Check if User exist with same email address
+
+        implementListeners()
+        initObservers()
+    }
+
+    private fun implementListeners() {
         binding.btnSignup.setOnClickListener {
             if (validateFields() && validatePass()) {
                 val user =
@@ -50,22 +55,23 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         }
-        observeViewModel()
     }
 
-    //This function handles all the LiveData to be observed
-    private fun observeViewModel() {
+
+    //Check if fields are valid, then insert new user
+    //We can also add Check if User exist with same email address
+    private fun initObservers() {
         //On Successful Login, Redirect to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            Toast.makeText(this, "Welcome ${it.fName} ${it.lName}", Toast.LENGTH_LONG).show()
+            utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
         //- Can Be Removed - Checks if user inserted successfully
         userViewModel.fetchInsertedId().observe(this) {
             if (it != -1L && it != 0L) {
-                Toast.makeText(this, "Registration Successful", Toast.LENGTH_LONG).show()
+                utilityfunctions.showtoast(this, "Registration Successful")
             } else {
-                Toast.makeText(this, "Insert Failed", Toast.LENGTH_LONG).show()
+                utilityfunctions.showtoast(this, "Insert Failed")
             }
         }
     }
@@ -74,7 +80,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun validatePass(): Boolean {
         return when {
             binding.passEt.text.toString() != binding.confirmPassEt.text.toString() -> {
-                Toast.makeText(this, "Passwords Don't Match", Toast.LENGTH_LONG).show()
+                utilityfunctions.showtoast(this, "Passwords Don't Match")
                 false
             }
             else -> {
