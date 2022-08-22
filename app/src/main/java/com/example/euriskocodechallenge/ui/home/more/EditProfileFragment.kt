@@ -1,14 +1,20 @@
 package com.example.euriskocodechallenge.ui.home.more
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,10 +23,13 @@ import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.example.euriskocodechallenge.R
 import com.example.euriskocodechallenge.common.UtilityFunctions
+import com.example.euriskocodechallenge.common.toBase64
+import com.example.euriskocodechallenge.common.toBitmap
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
-import com.example.euriskocodechallenge.utils.Constants
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
+import com.example.euriskocodechallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,6 +38,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var binding: FragmentEditProfileBinding
     private val viewModel by viewModels<MoreViewModel>()
     private lateinit var selectedImage: Bitmap
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,15 +53,41 @@ class EditProfileFragment : Fragment() {
         //Handles Image Selected From Gallery
         val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
             lifecycleScope.launch {
-                selectedImage = viewModel.getBitmap(it)
+                selectedImage = getBitmap(it)
                 binding.userImage.load(selectedImage)
-                UtilityFunctions.printLogs(Constants.TAG, "${viewModel.getBitmap(it)}")
+                UtilityFunctions.printLogs(Constants.TAG, "${getBitmap(it)}")
             }
         }
+        //Handles Image Selected From Camera
+        val getImageFromCamera =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val photo = result.data?.extras?.get("data") as? Bitmap
+                    photo?.let {
+                        lifecycleScope.launch {
+                            selectedImage = it
+                            binding.userImage.load(selectedImage)
+                            UtilityFunctions.printLogs(Constants.TAG, "$it")
+                        }
+                    }
+                }
+            }
 
         //Launches Gallery Image Picker
         binding.editFab.setOnClickListener {
-            getImage.launch("image/*")
+
+            BottomSheetFragment().apply {
+                setOnCameraClickListener {
+                    if (setupPermissions()) {
+                        getImageFromCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+                    } else {
+                        makeRequest()
+                    }
+                    setOnStorageClickListener {
+                        getImage.launch("image/*")
+                    }
+                }
+            }.show(parentFragmentManager, "TAG")
         }
 
         binding.btnSave.setOnClickListener {
@@ -59,7 +95,7 @@ class EditProfileFragment : Fragment() {
                 viewModel.updateUser(
                     binding.fNameEt.text?.trim().toString(),
                     binding.lNameEt.text.toString(),
-                    selectedImage
+                    selectedImage.toBase64()
                 )
                 UtilityFunctions.showtoast(requireContext(), Constants.USER_UPDATED)
                 findNavController().navigateUp()
@@ -69,8 +105,37 @@ class EditProfileFragment : Fragment() {
         return view
     }
 
-    private fun implementListeners() {
+    private suspend fun getBitmap(uri: Uri): Bitmap {
+        val loader = ImageLoader(requireContext())
+        val request = ImageRequest.Builder(requireContext())
+            .data(uri)
+            .build()
+        val result = (loader.execute(request) as SuccessResult).drawable
+        return (result as BitmapDrawable).bitmap
+    }
 
+    private fun setupPermissions(): Boolean {
+        val permission = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.CAMERA
+        )
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            UtilityFunctions.printLogs(
+                getString(R.string.error_tag),
+                getString(R.string.permission_error)
+            )
+            return false
+        }
+        return true
+    }
+
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.CAMERA),
+            Constants.CAMERA_REQUEST_CODE
+        )
     }
 
 
@@ -105,15 +170,18 @@ class EditProfileFragment : Fragment() {
     private fun initUI() {
         viewModel.loggedInUser.observe(viewLifecycleOwner) {
             binding.userImage.load(it.imageSrc)
-            selectedImage = it.imageSrc
-            binding.fNameEt.setText(it.fName)
-            binding.lNameEt.setText(it.lName)
+            it.imageSrc.let {
+                it?.let {
+                    selectedImage = it.toBitmap()
+                }
+            }
+            binding.fNameEt.setText(it.firstName)
+            binding.lNameEt.setText(it.lastName)
             binding.emailTv.text = it.email
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
     }
 }
