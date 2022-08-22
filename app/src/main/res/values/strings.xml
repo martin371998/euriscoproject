@@ -28,4 +28,8 @@
     <string name="full_article">Find the full article at:</string>
     <string name="last_updated">Last Updated:</string>
     <string name="article_image">Article Image</string>
+    <string name="camera_label">Camera</string>
+    <string name="storage_label">Storage</string>
+    <string name="error_tag">ERROR</string>
+    <string name="permission_error">Permission not granted</string>
 </resources>

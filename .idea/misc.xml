@@ -3,9 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
         <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable/ic_account_circle.xml" value="0.1125" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable/ic_arrow_right.xml" value="0.2203125" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable/ic_baseline_sd_storage_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable/ic_edit.xml" value="0.2203125" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable/ic_info.xml" value="0.2203125" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
         <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/layout/activity_sign_up.xml" value="0.14356884057971014" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/layout/bottom_sheet_fragment.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/layout/fragment_about_us.xml" value="0.14356884057971014" />
         <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/layout/fragment_change_password.xml" value="0.14356884057971014" />
         <entry key="..\:/Users/user/AndroidStudioProjects/euriscoproject/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1" />
