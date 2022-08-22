@@ -1,4 +1,4 @@
-package com.example.euriskocodechallenge.ui
+package com.example.euriskocodechallenge.ui.login
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import com.example.euriskocodechallenge.R
-import com.example.euriskocodechallenge.model.User
+import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.databinding.ActivitySignUpBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
 import com.example.euriskocodechallenge.utils.Constants
-import com.example.euriskocodechallenge.viewmodel.UserViewModel
+import com.example.euriskocodechallenge.ui.home.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

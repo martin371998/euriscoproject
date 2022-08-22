@@ -1,15 +1,13 @@
 package com.example.euriskocodechallenge.ui.home.news
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.euriskocodechallenge.databinding.NewsItemBinding
-import com.example.euriskocodechallenge.model.News
-import com.example.euriskocodechallenge.model.Result
-import com.example.euriskocodechallenge.utils.Constants
+import com.example.euriskocodechallenge.data.model.News
+import com.example.euriskocodechallenge.data.model.Result
 
 class NewsRVAdapter : RecyclerView.Adapter<NewsRVAdapter.NewsViewHolder>() {
 

@@ -1,8 +1,8 @@
-package com.example.euriskocodechallenge.viewmodel
+package com.example.euriskocodechallenge.ui.home.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.euriskocodechallenge.model.User
+import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.data.repository.UserDatabaseRepository
 import com.example.euriskocodechallenge.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel

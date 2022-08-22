@@ -18,10 +18,9 @@ import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.example.euriskocodechallenge.R
 import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
 import com.example.euriskocodechallenge.utils.Constants
-import com.example.euriskocodechallenge.viewmodel.MoreViewModel
+import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

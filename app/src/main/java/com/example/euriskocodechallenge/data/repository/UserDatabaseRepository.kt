@@ -1,6 +1,6 @@
 package com.example.euriskocodechallenge.data.repository
 
-import com.example.euriskocodechallenge.model.User
+import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.data.local.room.UserDao
 import com.example.euriskocodechallenge.data.local.datastore.UserDataStore
 import javax.inject.Inject

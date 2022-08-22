@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.euriskocodechallenge.databinding.FragmentChangePasswordBinding
 import com.example.euriskocodechallenge.utils.Constants
-import com.example.euriskocodechallenge.viewmodel.MoreViewModel
+import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

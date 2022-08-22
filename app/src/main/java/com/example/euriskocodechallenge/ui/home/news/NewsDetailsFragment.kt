@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.euriskocodechallenge.databinding.FragmentNewsDetailsBinding
-import com.example.euriskocodechallenge.viewmodel.NewsViewModel
+import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

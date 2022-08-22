@@ -1,4 +1,4 @@
-package com.example.euriskocodechallenge.ui
+package com.example.euriskocodechallenge.ui.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.euriskocodechallenge.databinding.ActivityLoginBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
 import com.example.euriskocodechallenge.utils.Constants
-import com.example.euriskocodechallenge.viewmodel.UserViewModel
+import com.example.euriskocodechallenge.ui.home.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

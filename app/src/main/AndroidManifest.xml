@@ -15,10 +15,10 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.EuriskoCodeChallenge" >
         <activity
-            android:name=".ui.SignUpActivity"
+            android:name=".ui.login.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
