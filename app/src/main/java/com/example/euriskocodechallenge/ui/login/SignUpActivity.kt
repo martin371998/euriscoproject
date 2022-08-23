@@ -2,18 +2,19 @@ package com.example.euriskocodechallenge.ui.login
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.example.euriskocodechallenge.R
-import com.example.euriskocodechallenge.common.utilityfunctions
+import com.example.euriskocodechallenge.common.UtilityFunctions
+import com.example.euriskocodechallenge.common.toBase64
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.databinding.ActivitySignUpBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
-import com.example.euriskocodechallenge.utils.Constants
 import com.example.euriskocodechallenge.ui.home.viewmodel.UserViewModel
+import com.example.euriskocodechallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModels()
     private lateinit var binding: ActivitySignUpBinding
+
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +42,17 @@ class SignUpActivity : AppCompatActivity() {
         binding.btnSignup.setOnClickListener {
             if (validateFields() && validatePass()) {
                 val user =
-                    application.getDrawable(R.drawable.ic_account_circle)?.toBitmap()?.let { it1 ->
-                        User(
-                            userId = 0L,
-                            email = binding.emailEt.text?.trim().toString(),
-                            fName = binding.fNameEt.text?.trim().toString(),
-                            lName = binding.lNameEt.text?.trim().toString(),
-                            password = binding.passEt.text?.trim().toString(),
-                            it1
-                        )
-                    }
+                    ContextCompat.getDrawable(this, R.drawable.ic_account_circle)?.toBitmap()
+                        ?.let { it1 ->
+                            User(
+                                userId = 0L,
+                                email = binding.emailEt.text?.trim().toString(),
+                                firstName = binding.fNameEt.text?.trim().toString(),
+                                lastName = binding.lNameEt.text?.trim().toString(),
+                                password = binding.passEt.text?.trim().toString(),
+                                it1.toBase64()
+                            )
+                        }
                 user?.let {
                     userViewModel.insertUser(user)
                 }
@@ -63,15 +66,15 @@ class SignUpActivity : AppCompatActivity() {
     private fun initObservers() {
         //On Successful Login, Redirect to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
+            UtilityFunctions.showtoast(this, "Welcome ${it.firstName} ${it.lastName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
         //- Can Be Removed - Checks if user inserted successfully
         userViewModel.fetchInsertedId().observe(this) {
             if (it != -1L && it != 0L) {
-                utilityfunctions.showtoast(this, "Registration Successful")
+                UtilityFunctions.showtoast(this, "Registration Successful")
             } else {
-                utilityfunctions.showtoast(this, "Insert Failed")
+                UtilityFunctions.showtoast(this, "Insert Failed")
             }
         }
     }
@@ -80,7 +83,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun validatePass(): Boolean {
         return when {
             binding.passEt.text.toString() != binding.confirmPassEt.text.toString() -> {
-                utilityfunctions.showtoast(this, "Passwords Don't Match")
+                UtilityFunctions.showtoast(this, "Passwords Don't Match")
                 false
             }
             else -> {

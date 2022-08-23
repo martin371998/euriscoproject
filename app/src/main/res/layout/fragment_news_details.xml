@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingHorizontal="10dp"
+    android:paddingHorizontal="@dimen/linearlayout_padding"
     tools:context=".ui.home.news.NewsDetailsFragment">
 
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/textviewmargin_size"
         android:textColor="?attr/colorPrimary"
-        android:textSize="40sp"
+        android:textSize="@dimen/vbigtextview_size"
         android:textStyle="bold"
         tools:text="Title" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/abstract_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/textview_margin_top_abtv"
         tools:text="Abstract" />
 
     <TextView
@@ -53,7 +53,7 @@
             android:id="@+id/updated_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/textviewmargin_size"
             tools:text="19-9-9"
             android:textColor="@android:color/holo_blue_light"/>
 
@@ -74,7 +74,7 @@
             android:id="@+id/url_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/textviewmargin_size"
             tools:text="URL"
             android:textColor="@android:color/holo_blue_light"/>
     </LinearLayout>

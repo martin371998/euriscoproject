@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NewsDetailsFragment : Fragment() {
 
-    private lateinit var binding : FragmentNewsDetailsBinding
+    private lateinit var binding: FragmentNewsDetailsBinding
     private val viewModel: NewsViewModel by viewModels()
 
     val args: NewsDetailsFragmentArgs by navArgs()
@@ -35,7 +35,7 @@ class NewsDetailsFragment : Fragment() {
 
         //TODO Add Connection Test
         viewModel.response.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 binding.titleTv.text = it.news[position].title
                 binding.articleImage.load(it.news[position].media[0].mediaMetadata[2].url)
                 binding.abstractTv.text = it.news[position].abstract

@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import coil.load
 import com.example.euriskocodechallenge.R
-import com.example.euriskocodechallenge.common.utilityfunctions
-import com.example.euriskocodechallenge.databinding.FragmentEditProfileBinding
+import com.example.euriskocodechallenge.common.UtilityFunctions
 import com.example.euriskocodechallenge.databinding.FragmentMoreBinding
 import com.example.euriskocodechallenge.ui.login.LoginActivity
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
@@ -20,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MoreFragment : Fragment() {
-    private lateinit var binding : FragmentMoreBinding
+    private lateinit var binding: FragmentMoreBinding
     private val viewModel: MoreViewModel by viewModels()
 
     override fun onCreateView(
@@ -57,7 +55,7 @@ class MoreFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             viewModel.logOutUser()
 
-            utilityfunctions.showtoast(requireContext(), "Logged Out")
+            UtilityFunctions.showtoast(requireContext(), "Logged Out")
             startActivity(Intent(requireContext(), LoginActivity::class.java))
         }
 

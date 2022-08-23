@@ -24,8 +24,8 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.newsFragment, R.id.moreFragment))
 
-        navController.addOnDestinationChangedListener {_,destination,_ ->
-            when (destination.id){
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
                 R.id.newsFragment -> {
                     binding.bottomNav.visibility = VISIBLE
                 }
@@ -35,15 +35,13 @@ class HomeActivity : AppCompatActivity() {
                 else -> binding.bottomNav.visibility = GONE
             }
         }
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNav.setupWithNavController(navController)
-
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragment)
-        return navController.navigateUp() ||super.onSupportNavigateUp()
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

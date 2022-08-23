@@ -16,10 +16,11 @@ import dagger.hilt.components.SingletonComponent
 object UserModule {
 
     @Provides
-    fun provideUserDao(@ApplicationContext context: Context) : UserDao {
-        return  UserDatabase.getInstance(context).userDao
+    fun provideUserDao(@ApplicationContext context: Context): UserDao {
+        return UserDatabase.getInstance(context).userDao
     }
 
     @Provides
-    fun provideUserDatabaseRepository (userDao: UserDao, userDataStore : UserDataStore) = UserDatabaseRepository(userDao, userDataStore)
+    fun provideUserDatabaseRepository(userDao: UserDao, userDataStore: UserDataStore) =
+        UserDatabaseRepository(userDao, userDataStore)
 }

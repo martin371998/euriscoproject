@@ -1,7 +1,7 @@
 package com.example.euriskocodechallenge.ui.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
+import com.example.euriskocodechallenge.common.UtilityFunctions
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.data.repository.UserDatabaseRepository
 import com.example.euriskocodechallenge.utils.Constants
@@ -33,7 +33,7 @@ class UserViewModel @Inject constructor(
                 val user = userDatabaseRepository.getUserById(loggedInUserId)
                 user.collect { user ->
                     user?.let {
-                        Log.d(Constants.TAG, "User is : $it")
+                        UtilityFunctions.printLogs((Constants.TAG), "User is : $it")
                         loginUser(it.email.toString(), it.password.toString())
                     }
                 }
@@ -61,8 +61,8 @@ class UserViewModel @Inject constructor(
     //On User-SignUp insert a new user
     fun insertUser(user: User) {
         viewModelScope.launch {
-            if (user.fName.isNullOrEmpty() ||
-                user.lName.isNullOrEmpty() ||
+            if (user.firstName.isNullOrEmpty() ||
+                user.lastName.isNullOrEmpty() ||
                 user.email.isNullOrEmpty() ||
                 user.password.isNullOrEmpty()
             ) {

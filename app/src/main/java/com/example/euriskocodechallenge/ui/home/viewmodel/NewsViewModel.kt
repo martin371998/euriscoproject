@@ -13,11 +13,11 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
     private val _response = MutableLiveData<Result>()
-    val response : LiveData<Result>
-    get() = _response
+    val response: LiveData<Result>
+        get() = _response
 
     private val _error = MutableLiveData<String>()
-    val error : LiveData<String>
+    val error: LiveData<String>
         get() = _error
 
     init {
@@ -25,10 +25,9 @@ class NewsViewModel @Inject constructor(private val repository: NewsRepository) 
     }
 
 
-
     private fun getAllNews() = viewModelScope.launch {
-        repository.getAllNews().let {response ->
-            if (response.isSuccessful){
+        repository.getAllNews().let { response ->
+            if (response.isSuccessful) {
                 _response.postValue(response.body())
             } else {
                 _error.postValue("${response.errorBody()}")
