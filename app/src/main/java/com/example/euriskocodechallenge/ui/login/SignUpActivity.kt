@@ -69,9 +69,9 @@ class SignUpActivity : AppCompatActivity() {
         //- Can Be Removed - Checks if user inserted successfully
         userViewModel.fetchInsertedId().observe(this) {
             if (it != -1L && it != 0L) {
-                utilityfunctions.showtoast(this, "Registration Successful")
+                utilityfunctions.showtoast(this, getString(R.string.registration_successful))
             } else {
-                utilityfunctions.showtoast(this, "Insert Failed")
+                utilityfunctions.showtoast(this, getString(R.string.insert_failed))
             }
         }
     }
@@ -80,7 +80,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun validatePass(): Boolean {
         return when {
             binding.passEt.text.toString() != binding.confirmPassEt.text.toString() -> {
-                utilityfunctions.showtoast(this, "Passwords Don't Match")
+                utilityfunctions.showtoast(this, getString(R.string.passwords_dont_match))
                 false
             }
             else -> {

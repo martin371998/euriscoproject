@@ -28,4 +28,7 @@
     <string name="full_article">Find the full article at:</string>
     <string name="last_updated">Last Updated:</string>
     <string name="article_image">Article Image</string>
+    <string name="registration_successful">Registration Successful</string>
+    <string name="insert_failed">Insert Failed</string>
+    <string name="passwords_dont_match">Passwords Don\'t Match</string>
 </resources>
