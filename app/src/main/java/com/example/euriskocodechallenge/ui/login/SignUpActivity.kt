@@ -4,11 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.graphics.drawable.toBitmap
 import com.example.euriskocodechallenge.R
-import com.example.euriskocodechallenge.common.utilityfunctions
+import com.example.euriskocodechallenge.common.Utilityfunctions
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.databinding.ActivitySignUpBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
@@ -63,15 +62,15 @@ class SignUpActivity : AppCompatActivity() {
     private fun initObservers() {
         //On Successful Login, Redirect to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
+            Utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
         //- Can Be Removed - Checks if user inserted successfully
         userViewModel.fetchInsertedId().observe(this) {
             if (it != -1L && it != 0L) {
-                utilityfunctions.showtoast(this, getString(R.string.registration_successful))
+                Utilityfunctions.showtoast(this, getString(R.string.registration_successful))
             } else {
-                utilityfunctions.showtoast(this, getString(R.string.insert_failed))
+                Utilityfunctions.showtoast(this, getString(R.string.insert_failed))
             }
         }
     }
@@ -80,7 +79,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun validatePass(): Boolean {
         return when {
             binding.passEt.text.toString() != binding.confirmPassEt.text.toString() -> {
-                utilityfunctions.showtoast(this, getString(R.string.passwords_dont_match))
+                Utilityfunctions.showtoast(this, getString(R.string.passwords_dont_match))
                 false
             }
             else -> {

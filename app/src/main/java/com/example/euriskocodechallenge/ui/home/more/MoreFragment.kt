@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import coil.load
 import com.example.euriskocodechallenge.R
-import com.example.euriskocodechallenge.common.utilityfunctions
+import com.example.euriskocodechallenge.common.Utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentMoreBinding
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
 import com.example.euriskocodechallenge.ui.login.LoginActivity
@@ -56,7 +56,7 @@ class MoreFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             viewModel.logOutUser()
 
-            utilityfunctions.showtoast(requireContext(), "Logged Out")
+            Utilityfunctions.showtoast(requireContext(), "Logged Out")
             startActivity(Intent(requireContext(), LoginActivity::class.java))
         }
 

@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.euriskocodechallenge.R
-import com.example.euriskocodechallenge.common.utilityfunctions
+import com.example.euriskocodechallenge.common.Utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentNewsBinding
 import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
 import com.example.euriskocodechallenge.utils.ConnectivityLiveData
@@ -53,7 +53,7 @@ class NewsFragment : Fragment() {
                 initRecyclerView()
                 observeViewModel(view)
             } else {
-                utilityfunctions.showtoast(requireContext(), "Lost Connection")
+                Utilityfunctions.showtoast(requireContext(), "Lost Connection")
                 binding.newsRecycler.visibility = View.GONE
                 binding.internetTv.visibility = View.VISIBLE
             }
@@ -71,7 +71,7 @@ class NewsFragment : Fragment() {
                         val action =
                             NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment(position)
                         Navigation.findNavController(binding.root).navigate(action)
-                        utilityfunctions.showtoast(requireContext(), "$position")
+                        Utilityfunctions.showtoast(requireContext(), "$position")
                     }
                 })
             }
