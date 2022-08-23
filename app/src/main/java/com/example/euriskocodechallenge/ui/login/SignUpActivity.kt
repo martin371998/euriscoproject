@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.graphics.drawable.toBitmap
 import com.example.euriskocodechallenge.R
+import com.example.euriskocodechallenge.common.Utilityfunctions
 import com.example.euriskocodechallenge.data.model.User
 import com.example.euriskocodechallenge.databinding.ActivitySignUpBinding
 import com.example.euriskocodechallenge.ui.home.HomeActivity
@@ -30,37 +30,47 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        //Check if fields are valid, then insert new user
-        //We can also add Check if User exist with same email address
-        binding.btnSignup.setOnClickListener {
-            if (validateFields() && validatePass()) {
-                val user = User(
-                    userId = 0L,
-                    email = binding.emailEt.text?.trim().toString(),
-                    fName = binding.fNameEt.text?.trim().toString(),
-                    lName = binding.lNameEt.text?.trim().toString(),
-                    password = binding.passEt.text?.trim().toString(),
-                    application.getDrawable(R.drawable.ic_account_circle)!!.toBitmap()
-                )
-                userViewModel.insertUser(user)
-            }
-        }
-        observeViewModel()
+
+        implementListeners()
+        initObservers()
     }
 
-    //This function handles all the LiveData to be observed
-    private fun observeViewModel() {
+    private fun implementListeners() {
+        binding.btnSignup.setOnClickListener {
+            if (validateFields() && validatePass()) {
+                val user =
+                    application.getDrawable(R.drawable.ic_account_circle)?.toBitmap()?.let { it1 ->
+                        User(
+                            userId = 0L,
+                            email = binding.emailEt.text?.trim().toString(),
+                            fName = binding.fNameEt.text?.trim().toString(),
+                            lName = binding.lNameEt.text?.trim().toString(),
+                            password = binding.passEt.text?.trim().toString(),
+                            it1
+                        )
+                    }
+                user?.let {
+                    userViewModel.insertUser(user)
+                }
+            }
+        }
+    }
+
+
+    //Check if fields are valid, then insert new user
+    //We can also add Check if User exist with same email address
+    private fun initObservers() {
         //On Successful Login, Redirect to HomeActivity and setUserLoggedIn in DataStore
         userViewModel.fetchUser().observe(this) {
-            Toast.makeText(this, "Welcome ${it.fName} ${it.lName}", Toast.LENGTH_LONG).show()
+            Utilityfunctions.showtoast(this, "Welcome ${it.fName} ${it.lName}")
             startActivity(Intent(this, HomeActivity::class.java))
         }
         //- Can Be Removed - Checks if user inserted successfully
         userViewModel.fetchInsertedId().observe(this) {
             if (it != -1L && it != 0L) {
-                Toast.makeText(this, "Registration Successful", Toast.LENGTH_LONG).show()
+                Utilityfunctions.showtoast(this, getString(R.string.registration_successful))
             } else {
-                Toast.makeText(this, "Insert Failed", Toast.LENGTH_LONG).show()
+                Utilityfunctions.showtoast(this, getString(R.string.insert_failed))
             }
         }
     }
@@ -69,7 +79,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun validatePass(): Boolean {
         return when {
             binding.passEt.text.toString() != binding.confirmPassEt.text.toString() -> {
-                Toast.makeText(this, "Passwords Don't Match", Toast.LENGTH_LONG).show()
+                Utilityfunctions.showtoast(this, getString(R.string.passwords_dont_match))
                 false
             }
             else -> {
@@ -86,7 +96,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.emailEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.emailEt.text!!.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
+            !binding.emailEt.text?.trim().toString().matches(Constants.EMAIL_REGEX.toRegex()) -> {
                 binding.emailEt.error = Constants.INVALID_EMAIL
                 isValid = false
             }
@@ -96,7 +106,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.fNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.fNameEt.text!!.trim().toString()
+            !binding.fNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.fNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -107,7 +117,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.lNameEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            !binding.lNameEt.text!!.trim().toString()
+            !binding.lNameEt.text?.trim().toString()
                 .matches(Constants.WHITE_SPACE_REGEX.toRegex()) -> {
                 binding.lNameEt.error = Constants.CONTAINS_WHITESPACE
                 isValid = false
@@ -118,7 +128,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.passEt.error = Constants.EMPTY_FIELD
                 isValid = false
             }
-            binding.passEt.text!!.trim().length < 7 -> {
+            binding.passEt.text.toString().trim().length < 7 -> {
                 binding.passEt.error = Constants.TOO_SHORT
                 isValid = false
             }

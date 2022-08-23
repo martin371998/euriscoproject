@@ -1,22 +1,21 @@
 package com.example.euriskocodechallenge.ui.home.more
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.euriskocodechallenge.common.Utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentChangePasswordBinding
-import com.example.euriskocodechallenge.utils.Constants
 import com.example.euriskocodechallenge.ui.home.viewmodel.MoreViewModel
+import com.example.euriskocodechallenge.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
-    private var _binding: FragmentChangePasswordBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentChangePasswordBinding
     private val viewModel by viewModels<MoreViewModel>()
 
     override fun onCreateView(
@@ -24,19 +23,26 @@ class ChangePasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
+        binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        binding.btnSave.setOnClickListener {
-            if(validateFields()){
-                validateOldPass()
-            }
-        }
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        implementListeners()
+    }
+
+    private fun implementListeners() {
+        binding.btnSave.setOnClickListener {
+            if (validateFields()) {
+                validateOldPass()
+            }
+        }
+    }
+
     //Checks Empty Fields
-    private fun validateFields() : Boolean{
+    private fun validateFields(): Boolean {
         var isValid = true
         if (binding.oldPassEt.text.isNullOrEmpty()) {
             binding.oldPassEt.error = Constants.EMPTY_FIELD
@@ -56,8 +62,8 @@ class ChangePasswordFragment : Fragment() {
     private fun validateOldPass() {
         viewModel.loggedInUser.observe(viewLifecycleOwner) {
             if (binding.oldPassEt.text.toString() == it.password) {
-                viewModel.updateUserPassword(it,binding.newPassEt.text.toString())
-                Toast.makeText(requireContext(),Constants.USER_UPDATED,Toast.LENGTH_SHORT).show()
+                viewModel.updateUserPassword(it, binding.newPassEt.text.toString())
+                Utilityfunctions.showtoast(requireContext(), Constants.USER_UPDATED)
                 findNavController().navigateUp()
             } else binding.oldPassEt.error = Constants.WRONG_PASSWORD
         }

@@ -6,24 +6,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.euriskocodechallenge.R
+import com.example.euriskocodechallenge.common.Utilityfunctions
 import com.example.euriskocodechallenge.databinding.FragmentNewsBinding
-import com.example.euriskocodechallenge.utils.ConnectivityLiveData
 import com.example.euriskocodechallenge.ui.home.viewmodel.NewsViewModel
+import com.example.euriskocodechallenge.utils.ConnectivityLiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class NewsFragment : Fragment() {
-    private var _binding: FragmentNewsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentNewsBinding
     private val viewModel: NewsViewModel by viewModels()
     private val recyclerViewAdapter by lazy { NewsRVAdapter() }
     private lateinit var connectionStatus: ConnectivityLiveData
@@ -34,25 +33,27 @@ class NewsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentNewsBinding.inflate(inflater, container, false)
-        val view = binding.root
+        binding = FragmentNewsBinding.inflate(inflater, container, false)
+        setupViews()
 
+
+
+        return binding.root
+    }
+    private fun setupViews() {
         binding.internetTv.visibility = View.VISIBLE
-        checkConnection(view)
-
-        return view
+        checkConnection(binding.root)
     }
 
     private fun checkConnection(view: View) {
-        connectionStatus = ConnectivityLiveData(requireActivity().application)
-        connectionStatus.observe(viewLifecycleOwner) {
+        ConnectivityLiveData(requireActivity().application).observe(viewLifecycleOwner) {
             if (it) {
                 binding.internetTv.visibility = View.GONE
                 binding.newsProgress.visibility = View.VISIBLE
                 initRecyclerView()
                 observeViewModel(view)
-            } else if (!it) {
-                Toast.makeText(requireContext(), "Lost Connection", Toast.LENGTH_SHORT).show()
+            } else {
+                Utilityfunctions.showtoast(requireContext(), "Lost Connection")
                 binding.newsRecycler.visibility = View.GONE
                 binding.internetTv.visibility = View.VISIBLE
             }
@@ -65,11 +66,12 @@ class NewsFragment : Fragment() {
         binding.newsRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = recyclerViewAdapter.apply {
-                setOnItemClickListener(object : NewsRVAdapter.onItemClickedListener{
+                setOnItemClickListener(object : NewsRVAdapter.onItemClickedListener {
                     override fun onItemClick(position: Int) {
-                        val action = NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment(position)
+                        val action =
+                            NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment(position)
                         Navigation.findNavController(binding.root).navigate(action)
-                        Toast.makeText(requireContext(),"$position",Toast.LENGTH_SHORT).show()
+                        Utilityfunctions.showtoast(requireContext(), "$position")
                     }
                 })
             }
@@ -79,7 +81,7 @@ class NewsFragment : Fragment() {
     private fun observeViewModel(view: View) {
         //Observe Retrofit Result -> Set Recycler View Data, Dismiss Progress Bar
         viewModel.response.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 recyclerViewAdapter.setData(it)
                 binding.newsProgress.visibility = View.GONE
             }
